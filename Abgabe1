@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[german]{babel}
+
+\title{CoMetAbgabe1}
+\author{Malte Hausmann}
+\date{November 2024}
+
+\begin{document}
+
+\maketitle
+
+\section{Der zentrale Grenzwertsatz}
+\subsection{Aussage}
+\subsection{Erklärung der Standardisierung}
+\subsection{Anwendungen}
+\section{Bearbeitung zur Aufgabe 1}
+\subsection{Thema Datenverarbeitung}
+\begin{enumerate}
+    \item Wie haben eine CSV Datei mit Daten bekommen, welche durch ein Komma getrennt sind und in der ersten Zeile die Spaltenüberschriften stehen. Wir sehen eine Datei für 100 Stationen beziehungsweise Gruppen und beschäftigen uns mit den Daten für Gruppe 11, welche unsere ist. Es ist für unsere Station "5 Ave \& E 103 St" für fast jeden Tag des Jahres 2023 Daten gesammelt worden. Ausnahmen sind hier der fünfte und sechste November, die in unseren Daten fehlen. Ansonsten wurde für das Jahr verschiedene Wetterinformationen, sowie die Anzahl der ausgeliehenen Fahrräder an dem Tag gesammelt. Die darunter für unsere Gruppe relevanten Daten sind die in der Spalte "average\_temperature", welche in Fahrenheit angegeben ist. Sie zeigt uns die Durchschnittstemperatur für den jeweiligen Tag für unsere Station an.
+    \item Hier wurde der Datensatz in den Tabellenkalkulator Excel importiert und die Daten für unsere Gruppe separat in eine neue Tabelle kopiert.
+    \item Zuerst haben wir gemerkt, dass beim Standardmäßigen Importieren der Datentyp der Spalte "average\_temperatur" als Text importiert wurde, sodass man nicht direkt eine Maximumsfunktion verwenden kann. um dies zu ändern haben wir in der nächst freien Spalte M einmal mit der Formel 
+    \begin{verbatim}
+    =WENN(J2="NA";0;WERT(J2))           
+    \end{verbatim}
+    den Text in Zahlen formatiert und den Wert für Tage, an denen keine Durchschnittstemperatur gegeben war auf 0 gesetzt, da dieser Wert nicht das Maximum sein wird und somit nichts kaputt macht. Das Beispiel ist jetzt für den ersten Wert und wurde für alle Zeilen der Spalte so eingefügt mit richtiger Zeilenbezeichnung. Danach haben wir mit der Formel 
+    \begin{verbatim}
+    =MAX(M2:M364)
+    \end{verbatim}
+    das Maximum berechnet über alle Durchschnittstemperaturen. Der Wert der dabei herausgekommen ist war 83, also 83°F. Da wir aber den Wert in Grad Celsius haben wollen, müssen wir den auch noch einmal umwandeln. Das haben wir mit der Formel
+    \begin{verbatim}
+    =UMWANDELN(O2;"F";"C")
+    \end{verbatim}
+    gemacht. Als Ergebnis kommt dann der gerundete Wert 28,33°C raus, was die höchste mittlere Temperatur in unserem Datensatz in Celsius ist.
+\end{enumerate}
+\subsection{Thema Datenhaltung}
+\begin{enumerate}
+    \item Hier wurde sich SQLite heruntergeladen und sich damit vertraut gemacht.
+    \item Unser Schema sieht wie folgt aus:
+    \begin{enumerate}
+        \item Stationen(\underline{group\#}, station)
+        \item Tagesdaten(\underline{date\#}, day\_of\_year, day\_of\_week, month\_of\_year, precipitation, windspeed, min\_temperature, average\_temperature, max\_temperature)
+        \item AnzahlVerleih(\underline{group\#, date\#}, count) 
+    \end{enumerate}
+    Durch diese Struktur haben wir einmal unsere Station separiert und könnten leicht andere Stationen neu hinzufügen. Außerdem haben wir in der zweiten Tabelle dann die Tagesdaten von jedem Tag, welche wir gesammelt habe. Beim ersten durchschauen ist aufgefallen, dass die Tagesdaten sich für die jeweiligen Stationen sich nicht unterscheiden (außer bei Fehlern in den Daten), weshalb man später mit mehreren Stationen kein Problem dabei hat, die Tagesdaten den Stationen zuzuordnen. Als letzte Tabelle haben wir dann noch eine Verbindungstabelle aus den beiden, bei dem wir unsere Station mit den jeweiligen Tagen verbinden, um am ende zu sehen wie viele Fahrräder wir verliehen haben.
+    \item Zunächst mussten wir mit SQLite eine Datenbank erst einmal erstellen. Dazu haben wir nachdem wir in der Konsole Sqlite3 aufgerufen haben eine erstellt mit dem Befehl
+    \begin{verbatim}
+    .open "Dateipfad/Aufgabe1.db",
+    \end{verbatim}
+    wobei Dateipfad als Platzhalter fungiert. Im nächsten Schritt ging es an das erstellen unserer drei Tabellen die wir vorher definiert haben. Dazu war das er folgende Code um den DDL-Teil abzuschließen:
+    \begin{verbatim}
+    Create Table Stationen(
+    (x1...> "group" Integer Primary Key,
+    (x1...> Station Text
+    (x1...> );
+
+    Create Table Tagesdaten(
+    (x1...> date Text Primary Key,
+    (x1...> day_of_year Integer,
+    (x1...> day_of_week Integer,
+    (x1...> month_of_year Integer,
+    (x1...> precipitation Real,
+    (x1...> windspeed Real,
+    (x1...> min_temperature Integer,
+    (x1...> average_temperature Integer,
+    (x1...> max_temperature Integer
+    (x1...> );
+
+    Create Table AnzahlVerleihe(
+    (x1...> "group" Integer,
+    (x1...> date Text,
+    (x1...> count Integer,
+    (x1...> Primary Key ("group",date),
+    (x1...> Foreign Key ("group") References Stationen ("group"),
+    (x1...> Foreign Key (date) References Tagesdaten (date)
+    (x1...> );
+    \end{verbatim}
+    \item Wir haben durch kopieren der relevanten Daten unsere 3 passenden CSV Dateien erstellt, um sie zu importieren. Zunächst musste jedoch das Trennzeichen was SQLite für den Import benötigt festgelegt werden, welches wir so geändert haben:
+    \begin{verbatim}
+    .separator ;
+    \end{verbatim}
+    Danach ging es an das importieren der drei CSV Dateien:
+    \begin{verbatim}
+    .import "Dateipfad/Gruppe11StationenImport.csv" Stationen
+    .import "Dateipfad/Gruppe11TagesdatenImport.csv" Tagesdaten
+    .import "Dateipfad/Gruppe11AnzahlVerleiheImport.csv" AnzahlVerleihe
+    \end{verbatim}
+    \item Die Abfrage für die höchste mittlere Temperatur unserer Daten ist folgende:
+    \begin{verbatim}
+    Select Max(average_temperature) From Tagesdaten
+    WHERE average_temperature != 'NA';
+    \end{verbatim}
+    Es wird der Wert 83 ausgegeben, was wieder der gesuchte Wert in Fahrenheit ist. Die "WHERE" Bedingung brauchen wir, da wir "NA's" in den Daten haben, welche sonst angegeben werden, also suchen wir nur das Maximum der Daten, wo diese ungleich "NA" sind. Wenn wir jetzt den Wert noch umrechnen wollen, kann man im Internet nach einer Umrechnungsformel suchen und die Abfrage ein wenig abwandeln:
+    \begin{verbatim}
+    Select (Max(average_temperature)-32)*5/9 From Tagesdaten
+    WHERE average_temperature != 'NA';
+    \end{verbatim}
+    Nun ist der Output 28°C, was der gerundete Wert ist. Vermutlich ist der Wert ohne Nachkommastellen, weil wir "average\_temperature" als Integer und nicht als Real gespeichert haben.
+\end{enumerate}
+    
+\end{document}
