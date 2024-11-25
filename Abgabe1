@@ -30,8 +30,8 @@ Um die Summe der ZV in eine Standardnormalverteilung zu transformieren, subtrahi
 \subsection{Anwendungen}
 Der ZGS wird in vielen Bereichen der Statistik und der Wahrscheinlichkeitstheorie angewendet. Typische Beispiele sind:
 \begin{itemize}
-    \item Berechnung von Konfidenzintervallen für Stichprobenmittelwerte
-    \item Durchführung von Hypothesentests
+    \item Stichprobenmittelwerte werden in der Statistik oftmals mithilfe der Normalverteilung berechnet obwohl man die wahre Verteilung der Grundgesamtheit nicht kennt. 
+    \item Bei Hypothesentests wird für einen großen Stichprobenumfang von einer Normalverteilung ausgegangen. 
 \end{itemize}
 \section{Bearbeitung zur Aufgabe 1}
 \subsection{Thema Datenverarbeitung}
