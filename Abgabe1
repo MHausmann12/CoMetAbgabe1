@@ -2,9 +2,10 @@
 \usepackage[german]{babel}
 \usepackage{amsfonts}
 \usepackage{amsmath}
+\usepackage{hyperref}
 
 \title{Abgabe 1 für Computergestützte Methoden}
-\author{Gruppe 11, Malte Hausmann, Roman Fröhlich, Stephanie Buchholz}
+\author{Gruppe 11, Malte Hausmann, Roman Froehlich, Stephanie Buchholz}
 \date{02. Dezember 2024}
 
 \begin{document}
@@ -16,7 +17,7 @@
 \section{Der zentrale Grenzwertsatz}
 Der zentrale Grenzwertsatz (ZGS) ist ein fundamentales Resultat der Wahrscheinlichkeitstheorie, das die Verteilung von Summen unabhängiger, identisch verteilter ($i.i.d.$) Zufallsvariablen (ZV) beschreibt. Er besagt, dass unter bestimmten Voraussetzungen die Summe einer großen Anzahl solcher ZV annähernd normalverteilt ist, unabhängig von der Verteilung der einzelnen ZV. Dies ist besonders nützlich, da die Normalverteilung gut untersucht und mathematisch handhabbar ist.
 \subsection{Aussage}
-Sei $X_1,X_2,$...$,X_n$ eine Folge von $i.i.d.$  ZV mit dem Erwartungswert $\mu = \mathbb{E}(X_i)$ und der Varianz $\sigma^2 = $ Var$(X_i)$, wobei $0 < \sigma^2 < \infty$ gelte. Dann konvergiert die standardisierte Summe $Z_n$ dieser ZV für $n \to \infty$ in Verteilung gegen eine Standardnormalverteilung:!!!!!!
+Sei $X_1,X_2,$...$,X_n$ eine Folge von $i.i.d.$  ZV mit dem Erwartungswert $\mu = \mathbb{E}(X_i)$ und der Varianz $\sigma^2 = $ Var$(X_i)$, wobei $0 < \sigma^2 < \infty$ gelte. Dann konvergiert die standardisierte Summe $Z_n$ dieser ZV für $n \to \infty$ in Verteilung gegen eine Standardnormalverteilung:\footnote{Der zentrale Grenzwertsatz hat verschiedene Verallgemeinerungen. Eine davon ist der \textbf{Lindeberg-Feller-Zentrale-Grenzwertsatz}\cite[Seite 328]{Klenke}, der schwächere Bedingungen an die Unabhängigkeit und die identische Verteilung der ZV stellt.}
 \begin{equation}\label{Konv}
     Z_n = \frac{\sum_{i=1}^nX_i - n\mu}{\sigma \sqrt{n}} \overset{d}{\to} \mathcal{N}(0, 1).
 \end{equation}
@@ -27,40 +28,45 @@ Das bedeutet, dass für große $n$ die Summe der ZV näherungsweise normalvertei
 \subsection{Erklärung der Standardisierung}
 Um die Summe der ZV in eine Standardnormalverteilung zu transformieren, subtrahiert man den Erwartungswert $n\mu$ und teilt durch die Standardabweichung $\sigma \sqrt{n}$. Dies führt zu der obigen Formel \eqref{Konv}. Die Darstellung \eqref{Vert} ist für $n \to \infty$ nicht wohldefiniert.
 \subsection{Anwendungen}
+Der ZGS wird in vielen Bereichen der Statistik und der Wahrscheinlichkeitstheorie angewendet. Typische Beispiele sind:
+\begin{itemize}
+    \item Berechnung von Konfidenzintervallen für Stichprobenmittelwerte
+    \item Durchführung von Hypothesentests
+\end{itemize}
 \section{Bearbeitung zur Aufgabe 1}
 \subsection{Thema Datenverarbeitung}
 \begin{enumerate}
-    \item Wie haben eine CSV Datei mit Daten bekommen, welche durch ein Komma getrennt sind und in der ersten Zeile die Spaltenüberschriften stehen. Wir sehen eine Datei für 100 Stationen beziehungsweise Gruppen und beschäftigen uns mit den Daten für Gruppe 11, welche unsere ist. Es ist für unsere Station "5 Ave \& E 103 St" für fast jeden Tag des Jahres 2023 Daten gesammelt worden. Ausnahmen sind hier der fünfte und sechste November, die in unseren Daten fehlen. Ansonsten wurde für das Jahr verschiedene Wetterinformationen, sowie die Anzahl der ausgeliehenen Fahrräder an dem Tag gesammelt. Die darunter für unsere Gruppe relevanten Daten sind die in der Spalte "average\_temperature", welche in Fahrenheit angegeben ist. Sie zeigt uns die Durchschnittstemperatur für den jeweiligen Tag für unsere Station an.
+    \item Wir haben eine CSV-Datei mit Daten bekommen, welche durch ein Komma getrennt sind und in der ersten Zeile die Spaltenüberschriften stehen. Wir sehen eine Datei für 100 Stationen beziehungsweise Gruppen und beschäftigen uns mit den Daten für Gruppe 11, welche unsere ist. Es ist für unsere Station "5 Ave \& E 103 St" für fast jeden Tag des Jahres 2023 Daten gesammelt worden. Ausnahmen sind hier der fünfte und sechste November, welche in unseren Daten fehlen. Ansonsten wurde für das Jahr verschiedene Wetterinformationen sowie die Anzahl der ausgeliehenen Fahrräder an dem Tag gesammelt. Die darunter für unsere Gruppe relevanten Daten sind die in der Spalte "average\_temperature", welche in Fahrenheit angegeben ist. Sie zeigt uns die Durchschnittstemperatur für den jeweiligen Tag für unsere Station an.
     \item Hier wurde der Datensatz in den Tabellenkalkulator Excel importiert und die Daten für unsere Gruppe separat in eine neue Tabelle kopiert.
-    \item Zuerst haben wir gemerkt, dass beim Standardmäßigen Importieren der Datentyp der Spalte "average\_temperatur" als Text importiert wurde, sodass man nicht direkt eine Maximumsfunktion verwenden kann. um dies zu ändern haben wir in der nächst freien Spalte M einmal mit der Formel 
+    \item Zuerst haben wir gemerkt, dass beim standardmäßigen Importieren der Datentyp der Spalte "average\_temperatur" als Text importiert wurde, sodass man nicht direkt eine Maximumfunktion verwenden kann. Um dies zu ändern, haben wir in der nächsten freien Spalte M einmal mit der Formel 
     \begin{verbatim}
     =WENN(J2="NA";0;WERT(J2))           
     \end{verbatim}
-    den Text in Zahlen formatiert und den Wert für Tage, an denen keine Durchschnittstemperatur gegeben war auf 0 gesetzt, da dieser Wert nicht das Maximum sein wird und somit nichts kaputt macht. Das Beispiel ist jetzt für den ersten Wert und wurde für alle Zeilen der Spalte so eingefügt mit richtiger Zeilenbezeichnung. Danach haben wir mit der Formel 
+    den Text in Zahlen formatiert und den Wert für Tage, an denen keine Durchschnittstemperatur gegeben war, auf 0 gesetzt, da dieser Wert nicht das Maximum sein wird und somit nichts kaputt macht. Das Beispiel ist jetzt für den ersten Wert und wurde für alle Zeilen der Spalte so eingefügt, mit richtiger Zeilenbezeichnung. Danach haben wir mit der Formel 
     \begin{verbatim}
     =MAX(M2:M364)
     \end{verbatim}
-    das Maximum berechnet über alle Durchschnittstemperaturen. Der Wert der dabei herausgekommen ist war 83, also 83°F. Da wir aber den Wert in Grad Celsius haben wollen, müssen wir den auch noch einmal umwandeln. Das haben wir mit der Formel
+    das Maximum berechnet über alle Durchschnittstemperaturen. Der Wert, der dabei herausgekommen ist, war 83, also 83 °F. Da wir aber den Wert in Grad Celsius haben wollen, müssen wir den auch noch einmal umwandeln. Das haben wir mit der Formel
     \begin{verbatim}
     =UMWANDELN(O2;"F";"C")
     \end{verbatim}
-    gemacht. Als Ergebnis kommt dann der gerundete Wert 28,33°C raus, was die höchste mittlere Temperatur in unserem Datensatz in Celsius ist.
+    gemacht. Als Ergebnis kommt dann der gerundete Wert 28,33 °C raus, was die höchste mittlere Temperatur in unserem Datensatz in Celsius ist.
 \end{enumerate}
 \subsection{Thema Datenhaltung}
 \begin{enumerate}
     \item Hier wurde sich SQLite heruntergeladen und sich damit vertraut gemacht.
     \item Unser Schema sieht wie folgt aus:
-    \begin{enumerate}
+    \begin{itemize}
         \item Stationen(\underline{group\#}, station)
         \item Tagesdaten(\underline{date\#}, day\_of\_year, day\_of\_week, month\_of\_year, precipitation, windspeed, min\_temperature, average\_temperature, max\_temperature)
         \item AnzahlVerleih(\underline{group\#, date\#}, count) 
-    \end{enumerate}
-    Durch diese Struktur haben wir einmal unsere Station separiert und könnten leicht andere Stationen neu hinzufügen. Außerdem haben wir in der zweiten Tabelle dann die Tagesdaten von jedem Tag, welche wir gesammelt habe. Beim ersten durchschauen ist aufgefallen, dass die Tagesdaten sich für die jeweiligen Stationen sich nicht unterscheiden (außer bei Fehlern in den Daten), weshalb man später mit mehreren Stationen kein Problem dabei hat, die Tagesdaten den Stationen zuzuordnen. Als letzte Tabelle haben wir dann noch eine Verbindungstabelle aus den beiden, bei dem wir unsere Station mit den jeweiligen Tagen verbinden, um am ende zu sehen wie viele Fahrräder wir verliehen haben.
-    \item Zunächst mussten wir mit SQLite eine Datenbank erst einmal erstellen. Dazu haben wir nachdem wir in der Konsole Sqlite3 aufgerufen haben eine erstellt mit dem Befehl
+    \end{itemize}
+    Durch diese Struktur haben wir einmal unsere Station separiert und könnten leicht andere Stationen neu hinzufügen. Außerdem haben wir in der zweiten Tabelle dann die Tagesdaten von jedem Tag, welche wir gesammelt haben. Beim ersten Durchschauen ist aufgefallen, dass die Tagesdaten sich für die jeweiligen Stationen nicht unterscheiden (außer bei Fehlern in den Daten), weshalb man später mit mehreren Stationen kein Problem dabei hat, die Tagesdaten den Stationen zuzuordnen. Als letzte Tabelle haben wir dann noch eine Verbindungstabelle aus den beiden, bei der wir unsere Station mit den jeweiligen Tagen verbinden, um am Ende zu sehen, wie viele Fahrräder wir verliehen haben.
+    \item Zunächst mussten wir mit SQLite eine Datenbank erst einmal erstellen. Dazu haben wir, nachdem wir in der Konsole Sqlite3 aufgerufen haben, eine erstellt, mit dem Befehl
     \begin{verbatim}
     .open "Dateipfad/Aufgabe1.db",
     \end{verbatim}
-    wobei Dateipfad als Platzhalter fungiert. Im nächsten Schritt ging es an das erstellen unserer drei Tabellen die wir vorher definiert haben. Dazu war das er folgende Code um den DDL-Teil abzuschließen:
+    wobei Dateipfad als Platzhalter fungiert. Im nächsten Schritt ging es an das Erstellen unserer drei Tabellen, die wir vorher definiert haben. Dazu war das der folgende Code, um den DDL-Teil abzuschließen:
     \begin{verbatim}
     Create Table Stationen(
     (x1...> "group" Integer Primary Key,
@@ -88,11 +94,11 @@ Um die Summe der ZV in eine Standardnormalverteilung zu transformieren, subtrahi
     (x1...> Foreign Key (date) References Tagesdaten (date)
     (x1...> );
     \end{verbatim}
-    \item Wir haben durch kopieren der relevanten Daten unsere 3 passenden CSV Dateien erstellt, um sie zu importieren. Zunächst musste jedoch das Trennzeichen was SQLite für den Import benötigt festgelegt werden, welches wir so geändert haben:
+    \item Wir haben durch Kopieren der relevanten Daten unsere 3 passenden CSV-Dateien erstellt, um sie zu importieren. Zunächst musste jedoch das Trennzeichen was SQLite für den Import benötigt festgelegt werden, welches wir so geändert haben:
     \begin{verbatim}
     .separator ;
     \end{verbatim}
-    Danach ging es an das importieren der drei CSV Dateien:
+    Danach ging es an das Importieren der drei CSV-Dateien:
     \begin{verbatim}
     .import "Dateipfad/Gruppe11StationenImport.csv" Stationen
     .import "Dateipfad/Gruppe11TagesdatenImport.csv" Tagesdaten
@@ -108,7 +114,12 @@ Um die Summe der ZV in eine Standardnormalverteilung zu transformieren, subtrahi
     Select (Max(average_temperature)-32)*5/9 From Tagesdaten
     WHERE average_temperature != 'NA';
     \end{verbatim}
-    Nun ist der Output 28°C, was der gerundete Wert ist. Vermutlich ist der Wert ohne Nachkommastellen, weil wir "average\_temperature" als Integer und nicht als Real gespeichert haben.
+    Nun ist der Output 28 °C, was der gerundete Wert ist. Vermutlich ist der Wert ohne Nachkommastellen, weil wir "average\_temperature" als Integer und nicht als Real gespeichert haben.
 \end{enumerate}
+\section{GitHub Link}
+Hier ist einmal der zugehörige GitHub Link zu unserem Latex Dokument: \newline https://github.com/MHausmann12/CoMetAbgabe1.git
+
+\bibliographystyle{plain}
+\bibliography{references}
     
 \end{document}
