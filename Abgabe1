@@ -1,18 +1,31 @@
 \documentclass{article}
-\usepackage{graphicx} % Required for inserting images
 \usepackage[german]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
 
-\title{CoMetAbgabe1}
-\author{Malte Hausmann}
-\date{November 2024}
+\title{Abgabe 1 für Computergestützte Methoden}
+\author{Gruppe 11, Malte Hausmann, Roman Fröhlich, Stephanie Buchholz}
+\date{02. Dezember 2024}
 
 \begin{document}
 
 \maketitle
+\tableofcontents
+\newpage
 
 \section{Der zentrale Grenzwertsatz}
+Der zentrale Grenzwertsatz (ZGS) ist ein fundamentales Resultat der Wahrscheinlichkeitstheorie, das die Verteilung von Summen unabhängiger, identisch verteilter ($i.i.d.$) Zufallsvariablen (ZV) beschreibt. Er besagt, dass unter bestimmten Voraussetzungen die Summe einer großen Anzahl solcher ZV annähernd normalverteilt ist, unabhängig von der Verteilung der einzelnen ZV. Dies ist besonders nützlich, da die Normalverteilung gut untersucht und mathematisch handhabbar ist.
 \subsection{Aussage}
+Sei $X_1,X_2,$...$,X_n$ eine Folge von $i.i.d.$  ZV mit dem Erwartungswert $\mu = \mathbb{E}(X_i)$ und der Varianz $\sigma^2 = $ Var$(X_i)$, wobei $0 < \sigma^2 < \infty$ gelte. Dann konvergiert die standardisierte Summe $Z_n$ dieser ZV für $n \to \infty$ in Verteilung gegen eine Standardnormalverteilung:!!!!!!
+\begin{equation}\label{Konv}
+    Z_n = \frac{\sum_{i=1}^nX_i - n\mu}{\sigma \sqrt{n}} \overset{d}{\to} \mathcal{N}(0, 1).
+\end{equation}
+Das bedeutet, dass für große $n$ die Summe der ZV näherungsweise normalverteilt ist mit Erwartungswert $n\mu$ und Varianz $n\sigma^2$:
+\begin{equation} \label{Vert}
+    \sum_{i=1}^n X_i \sim \mathcal{N}(n\mu, n\sigma^2).
+\end{equation}
 \subsection{Erklärung der Standardisierung}
+Um die Summe der ZV in eine Standardnormalverteilung zu transformieren, subtrahiert man den Erwartungswert $n\mu$ und teilt durch die Standardabweichung $\sigma \sqrt{n}$. Dies führt zu der obigen Formel \eqref{Konv}. Die Darstellung \eqref{Vert} ist für $n \to \infty$ nicht wohldefiniert.
 \subsection{Anwendungen}
 \section{Bearbeitung zur Aufgabe 1}
 \subsection{Thema Datenverarbeitung}
