@@ -1,11 +1,11 @@
 \documentclass{article}
-\usepackage[german]{babel}
+\usepackage[ngerman]{babel}
 \usepackage{amsfonts}
 \usepackage{amsmath}
 \usepackage{hyperref}
 
 \title{Abgabe 1 für Computergestützte Methoden}
-\author{Gruppe 11, Malte Hausmann, Roman Froehlich, Stephanie Buchholz}
+\author{Gruppe 11, Malte Hausmann (4253744),\\ Roman Froehlich (4287536), Stephanie Buchholz (4188888)}
 \date{02. Dezember 2024}
 
 \begin{document}
@@ -36,9 +36,9 @@ Der ZGS wird in vielen Bereichen der Statistik und der Wahrscheinlichkeitstheori
 \section{Bearbeitung zur Aufgabe 1}
 \subsection{Thema Datenverarbeitung}
 \begin{enumerate}
-    \item Wir haben eine CSV-Datei mit Daten bekommen, welche durch ein Komma getrennt sind und in der ersten Zeile die Spaltenüberschriften stehen. Wir sehen eine Datei für 100 Stationen beziehungsweise Gruppen und beschäftigen uns mit den Daten für Gruppe 11, welche unsere ist. Es ist für unsere Station "5 Ave \& E 103 St" für fast jeden Tag des Jahres 2023 Daten gesammelt worden. Ausnahmen sind hier der fünfte und sechste November, welche in unseren Daten fehlen. Ansonsten wurde für das Jahr verschiedene Wetterinformationen sowie die Anzahl der ausgeliehenen Fahrräder an dem Tag gesammelt. Die darunter für unsere Gruppe relevanten Daten sind die in der Spalte "average\_temperature", welche in Fahrenheit angegeben ist. Sie zeigt uns die Durchschnittstemperatur für den jeweiligen Tag für unsere Station an.
+    \item Wir haben eine CSV-Datei mit Daten bekommen, welche durch ein Komma getrennt sind und in der ersten Zeile die Spaltenüberschriften stehen. Wir sehen eine Datei für 100 Stationen beziehungsweise Gruppen und beschäftigen uns mit den Daten für Gruppe 11, welche unsere ist. Es ist für unsere Station \textit{5 Ave \& E 103 St} für fast jeden Tag des Jahres 2023 Daten gesammelt worden. Ausnahmen sind hier der fünfte und sechste November, welche in unseren Daten fehlen. Ansonsten wurde für das Jahr verschiedene Wetterinformationen sowie die Anzahl der ausgeliehenen Fahrräder an dem Tag gesammelt. Die darunter für unsere Gruppe relevanten Daten sind die in der Spalte \textit{average\_temperature}, welche in Fahrenheit angegeben ist. Sie zeigt uns die Durchschnittstemperatur für den jeweiligen Tag für unsere Station an.
     \item Hier wurde der Datensatz in den Tabellenkalkulator Excel importiert und die Daten für unsere Gruppe separat in eine neue Tabelle kopiert.
-    \item Zuerst haben wir gemerkt, dass beim standardmäßigen Importieren der Datentyp der Spalte "average\_temperatur" als Text importiert wurde, sodass man nicht direkt eine Maximumfunktion verwenden kann. Um dies zu ändern, haben wir in der nächsten freien Spalte M einmal mit der Formel 
+    \item Zuerst haben wir gemerkt, dass beim standardmäßigen Importieren der Datentyp der Spalte \textit{average\_temperature} als Text importiert wurde, sodass man nicht direkt eine Maximumfunktion verwenden kann. Um dies zu ändern, haben wir in der nächsten freien Spalte M einmal mit der Formel 
     \begin{verbatim}
     =WENN(J2="NA";0;WERT(J2))           
     \end{verbatim}
@@ -109,12 +109,12 @@ Der ZGS wird in vielen Bereichen der Statistik und der Wahrscheinlichkeitstheori
     Select Max(average_temperature) From Tagesdaten
     WHERE average_temperature != 'NA';
     \end{verbatim}
-    Es wird der Wert 83 ausgegeben, was wieder der gesuchte Wert in Fahrenheit ist. Die "WHERE" Bedingung brauchen wir, da wir "NA's" in den Daten haben, welche sonst angegeben werden, also suchen wir nur das Maximum der Daten, wo diese ungleich "NA" sind. Wenn wir jetzt den Wert noch umrechnen wollen, kann man im Internet nach einer Umrechnungsformel suchen und die Abfrage ein wenig abwandeln:
+    Es wird der Wert 83 ausgegeben, was wieder der gesuchte Wert in Fahrenheit ist. Die \textit{WHERE} Bedingung brauchen wir, da wir \textit{NA's} in den Daten haben, welche sonst angegeben werden, also suchen wir nur das Maximum der Daten, wo diese ungleich \textit{NA} sind. Wenn wir jetzt den Wert noch umrechnen wollen, kann man im Internet nach einer Umrechnungsformel suchen und die Abfrage ein wenig abwandeln:
     \begin{verbatim}
     Select (Max(average_temperature)-32)*5/9 From Tagesdaten
     WHERE average_temperature != 'NA';
     \end{verbatim}
-    Nun ist der Output 28 °C, was der gerundete Wert ist. Vermutlich ist der Wert ohne Nachkommastellen, weil wir "average\_temperature" als Integer und nicht als Real gespeichert haben.
+    Nun ist der Output 28 °C, was der gerundete Wert ist. Vermutlich ist der Wert ohne Nachkommastellen, weil wir \textit{average\_temperature} als Integer und nicht als Real gespeichert haben.
 \end{enumerate}
 \section{GitHub Link}
 Hier ist einmal der zugehörige GitHub Link zu unserem Latex Dokument: \newline https://github.com/MHausmann12/CoMetAbgabe1.git
